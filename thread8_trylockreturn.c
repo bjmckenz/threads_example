@@ -82,7 +82,9 @@ int main(int argc, char** argv)
     for (int ix=0; ix<number_of_threads; ix++) {
         thread_output_t* output;
         pthread_join(threads[ix], (void**)&output);
+        pthread_mutex_lock(&can_output);
         printf("[%3d]: %3d chars\n", output->thread_number, output->generated_random_number);
+        pthread_mutex_unlock(&can_output);
         free(output);
     }
 
